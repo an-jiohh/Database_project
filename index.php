@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ashion Template">
@@ -45,7 +44,7 @@
             </a></li>
         </ul>
         <div class="offcanvas__logo">
-            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+            <a href="./index.php"><img src="img/logo.png" alt=""></a>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
@@ -86,10 +85,20 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
-                        <div class="header__right__auth">
-                            <a href="./login.html">Login</a>
-                            <a href="#">Register</a>
-                        </div>
+                        <?php
+                        session_start();
+                        if(!isset($_SESSION['user_id'])){
+                        echo "<div class=\"header__right__auth\">
+                            <a href=\"./login.php\">Login</a>
+                            <a href=\"./create_id.php\">Register</a>
+                        </div>";
+                        }
+                        else {
+                            echo "<div class=\"header__right__auth\">
+                            <a href=\"./logout.php\">Log Out</a>
+                        </div>";
+                        }
+                        ?>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="#"><span class="icon_heart_alt"></span>
