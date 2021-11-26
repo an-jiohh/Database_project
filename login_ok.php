@@ -1,11 +1,11 @@
 <?php
-$conn = mysqli_connect("127.0.0.1:3307","root","111111","login");
+$conn = mysqli_connect("127.0.0.1:3306","root","1234","shopping_mall");
 
 if(!isset($_POST['user_id']) || !isset($_POST['user_pw'])) exit;
 $user_id = $_POST['user_id'];
 $user_pw = $_POST['user_pw'];
 
-$sql = "SELECT * FROM login.user WHERE id=\"$_POST[user_id]\"";
+$sql = "SELECT * FROM shopping_mall.user WHERE id=\"$_POST[user_id]\"";
 $result = mysqli_fetch_array(mysqli_query($conn, $sql));
 
 if(!($result)) {
@@ -18,6 +18,5 @@ if($result['password'] != $user_pw) {
 }
 session_start();
 $_SESSION['user_id'] = $user_id;
-$_SESSION['user_name'] = $result['name'];
 ?>
 <meta http-equiv='refresh' content='0;url=index.php'>

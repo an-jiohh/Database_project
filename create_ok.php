@@ -8,8 +8,8 @@ if($_POST['user_pw1']!=$_POST['user_pw2']) {
     exit;
 }
 
-$conn = mysqli_connect("127.0.0.1:3307","root","111111","login");
-$sql = "SELECT id FROM login.user WHERE id=\"$_POST[user_id]\"";
+$conn = mysqli_connect("127.0.0.1:3306","root","1234","shopping_mall");
+$sql = "SELECT id FROM shopping_mall.user WHERE id=\"$_POST[user_id]\"";
 $result = mysqli_fetch_array(mysqli_query($conn, $sql));
 
 if($result) {
