@@ -40,6 +40,8 @@ echo"
                         <h3>$product_name</h3>
                         <div class=\"product__details__price\">$product_price</div>
                         <p>$product_detail</p>
+                        <form action=\"Add_cart.php\" method=\"POST\">
+                        <input type=\"hidden\" name = \"product\" value=\"$product_num\">
                         <div class=\"product__details__button\">
                             <div class=\"quantity\">
                                 <span>Quantity:</span>
@@ -47,7 +49,7 @@ echo"
                                     <input type=\"text\" value=\"1\">
                                 </div>
                             </div>
-                            <a href=\"#\" class=\"cart-btn\"><span class=\"icon_bag_alt\"></span> Add to cart</a>
+                            <button type=\"submit\" class=\"cart-btn\"><span class=\"icon_bag_alt\"></span> Add to cart</button>
                             <ul>
                                 <li><a href=\"#\"><span class=\"icon_heart_alt\"></span></a></li>
                                 <li><a href=\"#\"><span class=\"icon_adjust-horiz\"></span></a></li>
@@ -60,46 +62,33 @@ echo"
                                     <div class=\"stock__checkbox\">
                                         <label for=\"stockin\">
                                             In Stock
-                                            <input type=\"checkbox\" id=\"stockin\">
+                                            <input type=\"checkbox\" id=\"stockin\" checked>
                                             <span class=\"checkmark\"></span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Available color:</span>
-                                    <div class=\"color__checkbox\">
-                                        <label for=\"red\">
-                                            <input type=\"radio\" name=\"color__radio\" id=\"red\" checked>
-                                            <span class=\"checkmark\"></span>
-                                        </label>
-                                        <label for=\"black\">
-                                            <input type=\"radio\" name=\"color__radio\" id=\"black\">
-                                            <span class=\"checkmark black-bg\"></span>
-                                        </label>
-                                        <label for=\"grey\">
-                                            <input type=\"radio\" name=\"color__radio\" id=\"grey\">
-                                            <span class=\"checkmark grey-bg\"></span>
                                         </label>
                                     </div>
                                 </li>
                                 <li>
                                     <span>Available size:</span>
-                                    <div class=\"size__btn\">
-                                        <label for=\"xs-btn\" class=\"active\">
-                                            <input type=\"radio\" id=\"xs-btn\">
-                                            xs
+                                    <div class=\"stock__checkbox\">
+                                        <label>
+                                            S
+                                            <input type=\"checkbox\" id=\"stockin\" name=\"size\" value=\"S\">
+                                            <span class=\"checkmark\"></span>
                                         </label>
-                                        <label for=\"s-btn\">
-                                            <input type=\"radio\" id=\"s-btn\">
-                                            s
+                                        <label>
+                                            M
+                                            <input type=\"checkbox\" id=\"stockin\" name=\"size\" value=\"M\">
+                                            <span class=\"checkmark\"></span>
                                         </label>
-                                        <label for=\"m-btn\">
-                                            <input type=\"radio\" id=\"m-btn\">
-                                            m
+                                        <label>
+                                            L
+                                            <input type=\"checkbox\" id=\"stockin\" name=\"size\" value=\"L\">
+                                            <span class=\"checkmark\"></span>
                                         </label>
-                                        <label for=\"l-btn\">
-                                            <input type=\"radio\" id=\"l-btn\">
-                                            l
+                                        <label>
+                                            XL
+                                            <input type=\"checkbox\" id=\"stockin\" name=\"size\" value=\"XL\">
+                                            <span class=\"checkmark\"></span>
                                         </label>
                                     </div>
                                 </li>
@@ -109,6 +98,7 @@ echo"
                                 </li>
                             </ul>
                         </div>
+                        </form>
                     </div>
                 </div>
                 <div class=\"col-lg-12\">
@@ -122,60 +112,38 @@ echo"
                 </div>
             </div>
             <div class=\"row\"> 
-            <!-- Product Details Section End --> ";
-?>
-                <div class="blog__details__comment">
-                    <h5>3 Comment</h5>
-                    <a href="#" class="leave-btn">Leave a comment</a>
-                    <div class="blog__comment__item">
-                        <div class="blog__comment__item__pic">
-                            <img src="img/blog/details/comment-1.jpg" alt="">
-                        </div>
-                        <div class="blog__comment__item__text">
-                            <h6>Brandon Kelley</h6>
-                            <p>Duis voluptatum. Id vis consequat consetetur dissentiet, ceteros commune perpetua
-                            mei et. Simul viderer facilisis egimus tractatos splendi.</p>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
-                                <li><i class="fa fa-heart-o"></i> 12</li>
-                                <li><i class="fa fa-share"></i> 1</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="blog__comment__item blog__comment__item--reply">
-                        <div class="blog__comment__item__pic">
-                            <img src="img/blog/details/comment-2.jpg" alt="">
-                        </div>
-                        <div class="blog__comment__item__text">
-                            <h6>Brandon Kelley</h6>
-                            <p>Consequat consetetur dissentiet, ceteros commune perpetua mei et. Simul viderer
-                            facilisis egimus ulla mcorper.</p>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
-                                <li><i class="fa fa-heart-o"></i> 12</li>
-                                <li><i class="fa fa-share"></i> 1</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="blog__comment__item">
-                        <div class="blog__comment__item__pic">
-                            <img src="img/blog/details/comment-3.jpg" alt="">
-                        </div>
-                        <div class="blog__comment__item__text">
-                            <h6>Brandon Kelley</h6>
-                            <p>Duis voluptatum. Id vis consequat consetetur dissentiet, ceteros commune perpetua
-                            mei et. Simul viderer facilisis egimus tractatos splendi.</p>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
-                                <li><i class="fa fa-heart-o"></i> 12</li>
-                                <li><i class="fa fa-share"></i> 1</li>
-                            </ul>
-                        </div>
-                    </div>
+            <!-- Product Details Section End --> 
+                <div class=\"blog__details__comment\">
+                    <h5>Comment</h5>
+                    <a href=\"#\" class=\"leave-btn\">Leave a comment</a>";
+                    $sql = "SELECT * FROM shopping_mall.review WHERE 상품번호= \"$product_num\" ";
+                    $result = mysqli_query($conn, $sql);
+                    while ($row = mysqli_fetch_array($result))
+                    {
+                        $reviewer = $row['id'];
+                        $review_name = $row['제목'];
+                        $review_content = $row['내용'];
+                        $review_size = $row['구매옷치수'];
+                        echo "
+                        <div class=\"blog__comment__item\">
+                            <div class=\"blog__comment__item__text\">
+                                <h6>$review_name</h6>
+                                <p>$review_content</p>
+                                <ul>
+                                    <li></i>작성자 : $reviewer</li>
+                                    <li></i>구매사이즈 : $review_size</li>
+                                    <li><i class=\"fa fa-heart-o\"></i> 0</li>
+                                    <li><i class=\"fa fa-share\"></i> 0</li>
+                                </ul>
+                            </div>
+                        </div> ";
+                    }
+                    ?>
                 </div>
             </div>
         </div>
-    </section>
+    </section> 
+    
     <!-- Product Details Section End -->
 
     <!-- Footer Section Begin -->

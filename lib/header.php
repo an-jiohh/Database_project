@@ -104,12 +104,11 @@ echo "
                             <a href=\"./user_detail.php\">회원정보 수정</a>
                         </div>
                         <ul class=\"header__right__widget\">
-                        <li><span class=\"icon_search search-switch\"></span></li>
-                        <li><a href=\"#\"><span class=\"icon_heart_alt\"></span>
-                            <div class=\"tip\">0</div>
+                        <div class=\"header__right__auth\">
+                        <a href=\"./purchase_list.php\">구매목록</a>
+                        </div>
                         </a></li>
-                        <li><a href=\"#\"><span class=\"icon_bag_alt\"></span>
-                            <div class=\"tip\">0</div>
+                        <li><a href=\"shop-cart.php\"><span class=\"icon_bag_alt\"></span>
                         </a></li>
                         </ul>";
                         }
