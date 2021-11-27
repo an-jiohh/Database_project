@@ -39,9 +39,12 @@ require('lib/header.php');
                                     WHERE id= \"{$_SESSION['user_id']}\"";
                                     $result = mysqli_query($conn, $sql);
                                     while ($row = mysqli_fetch_array($result)){
+                                        $buy_product = $row['구매번호'];
                                         $product = $row['상품번호'];
                                         $shoping_size = $row['구매옷치수'];
                                         $product_name = $row['상품이름'];
+                                        $checksql = "SELECT * FROM shopping_mall.review WHERE id = \"{$_SESSION['user_id']}\" AND 상품번호 = \"$product\"";
+                                        $check = mysqli_fetch_array(mysqli_query($conn, $checksql));
                                     echo "
                                     <tr>
                                     <td class=\"cart__product__item\" weight=\"300  \" height=\"200\">
@@ -55,11 +58,25 @@ require('lib/header.php');
                                     </td>
                                     </td>
                                     <td class=\"contact__form\">
-                                    <form action=\"#\" class=\"checkout__form\" method=\"POST\">
-                                    <p>제목</p>
-                                    <input type=\"text\" name='user_name' value=\"\">
-                                    <p>이름</p>
-                                    <textarea placeholder=\"Message\"></textarea>
+                                    <p>주문번호 : $buy_product</p>
+                                    <form action=\"create_review.php\" class=\"checkout__form\" method=\"POST\">
+                                    <input type=\"hidden\" name = \"product\" value=\"$product\">
+                                    <input type=\"hidden\" name = \"size\" value=\"$shoping_size\">
+                                    <p>제목</p> ";
+                                    if(!isset($check)){
+                                    echo "
+                                    <input type=\"text\" name='review_name' value=\"\">
+                                    <p>내용</p>
+                                    <textarea placeholder=\"Message\" name='review_main'></textarea>";
+                                    }
+                                    else {
+                                        echo "
+                                        <input type=\"text\" name='review_name' value=\"$check[제목]\">
+                                        <p>내용</p>
+                                        <textarea placeholder=\"$check[내용]\" name='review_main' value=\"\"></textarea>
+                                        ";
+                                    }
+                                    echo "
                                     <button type=\"submit\" class=\"site-btn\">create review</button>
                                     </form>
                                     </td>

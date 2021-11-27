@@ -38,7 +38,7 @@ echo"
                 <div class=\"col-lg-6\">
                     <div class=\"product__details__text\">
                         <h3>$product_name</h3>
-                        <div class=\"product__details__price\">$product_price</div>
+                        <div class=\"product__details__price\">$product_price 원</div>
                         <p>$product_detail</p>
                         <form action=\"Add_cart.php\" method=\"POST\">
                         <input type=\"hidden\" name = \"product\" value=\"$product_num\">
@@ -109,9 +109,43 @@ echo"
                         <img data-hash=\"product_detail\" class=\"product__big__img\" src=\"img/product/details/$product_num-detail.jpg\" alt=\"\">
                         </div>
                     </div>
+                    <div class=\"blog__details__comment\">";
+                    if(isset($_SESSION['user_id'])){
+                    $sql = "SELECT * FROM shopping_mall.user WHERE id= \"{$_SESSION['user_id']}\"";
+                    $result = mysqli_fetch_array(mysqli_query($conn, $sql));
+                    $user_weight = $result['몸무게'];
+                    $user_height = $result['키'];
+
+                    $count = 0;
+                    $max_count = 0;
+                    $sql =  "SELECT 구매옷치수, count(*) AS 'count'
+                            FROM shopping_mall.review LEFT OUTER JOIN shopping_mall.user ON review.id = user.id
+                            WHERE 상품번호=\"$product_num\" AND (키 BETWEEN ($user_height - 3) AND ($user_height + 3)) AND (몸무게 BETWEEN ($user_weight-3) AND ($user_weight + 3))
+                            GROUP BY 구매옷치수;";
+                    $result = mysqli_query($conn, $sql);
+                    while($row = mysqli_fetch_array($result)){
+                        $count = $count + $row['count'];
+                        if($max_count <= $row['count']){
+                        $max_count = $row['count'];
+                        $max_size = $row['구매옷치수'];
+                        }
+                    } 
+                    echo "
+                    <h5>입력된 회원님의 정보는 키 $user_height CM 몸무게 $user_weight KG 입니다.</h5>
+                    <h5>회원님과 비슷한 체형인 $count 명 고객 (키".($user_height-3)."~".($user_height+3)."CM 몸무게 ".($user_weight-3)."~".($user_weight+3)." Kg)
+                    중 $max_count 명이 $max_size 사이즈를 선택하셨습니다.</h5>
+                    <h5> $max_size 사이즈를 추천드립니다.</h5> ";
+                }
+                    echo "
+                    </div>
+                    <div class=\"product__details__tab\">
+                        <ul class=\"nav nav-tabs\">
+                        </ul>
+                        <div class=\"tab-content\">
+                    </div>
+                </div>
                 </div>
             </div>
-            <div class=\"row\"> 
             <!-- Product Details Section End --> 
                 <div class=\"blog__details__comment\">
                     <h5>Comment</h5>
