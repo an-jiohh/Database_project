@@ -1,0 +1,195 @@
+CREATE SCHEMA `shopping_mall` ;
+
+use shopping_mall;
+
+CREATE TABLE IF NOT EXISTS user (
+  id varchar(30) NOT NULL,
+  password varchar(30) NOT NULL,
+  성명 varchar(30) DEFAULT NULL,
+  주소 varchar(300) DEFAULT NULL,
+  키 int DEFAULT NULL,
+  몸무게 int DEFAULT NULL,
+  평소옷치수 varchar(4) default null,
+  폰번호 varchar(20) default null,
+  성별 varchar(13) default null,
+  PRIMARY KEY (id)
+) ;
+
+select* from user;
+
+CREATE TABLE `shopping_mall`.`product` (
+  `상품번호` VARCHAR(4) NOT NULL,
+  `상품이름` VARCHAR(45) NULL,
+  `상품설명` VARCHAR(200) NULL,
+  `가격` INT NULL,
+  PRIMARY KEY (`상품번호`));
+  
+INSERT INTO `shopping_mall`.`product` (`상품번호`, `상품이름`, `상품설명`, `가격`) VALUES ('p000', '회색 후드', '엄청 큰 YALE로고가 박혀있는 후드티', '51350');
+INSERT INTO `shopping_mall`.`product` (`상품번호`, `상품이름`, `상품설명`, `가격`) VALUES ('p001', '와이드 데님 팬츠', '와이드한 핏감과 적당한 두께감으로 누구한테나 매력적인 팬츠', '49000');
+
+  select* from product;
+  
+  
+CREATE TABLE `shopping_mall`.`review` (
+  `리뷰번호` VARCHAR(4) NOT NULL,
+  `상품번호` VARCHAR(4) NULL,
+  `id` VARCHAR(30) NULL,
+  `제목` VARCHAR(100) NULL,
+  `내용` VARCHAR(2000) NULL,
+  `구매옷치수` VARCHAR(4) NULL,
+  PRIMARY KEY (`리뷰번호`));
+DROP TABLE review;
+
+CREATE TABLE review_seq
+(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+DELIMITER $$
+CREATE TRIGGER review_insert
+BEFORE INSERT ON review FOR EACH ROW
+BEGIN
+  INSERT INTO review_seq VALUES (NULL);
+  SET NEW.리뷰번호 = CONCAT('R', LPAD(LAST_INSERT_ID(), 3, '0'));
+END$$
+DELIMITER ;
+DROP TRIGGER review_insert;
+
+SELECT * FROM shopping_mall.review WHERE 상품번호= "p000";
+INSERT INTO `shopping_mall`.`review` (`상품번호`, `제목`, `내용`, `구매옷치수`,`id`) VALUES ('p000', '난 이거', '별로', 'L','qwer');
+select * from review;
+
+CREATE TABLE `shopping_mall`.`shoping_cart` (
+  `카트번호` VARCHAR(4) NOT NULL,
+  `상품번호` VARCHAR(4) NULL,
+  `id` VARCHAR(30) NULL,
+  `구매옷치수` VARCHAR(4) NULL,
+  PRIMARY KEY (`카트번호`));
+
+CREATE TABLE shopping_cart_seq
+(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+DELIMITER $$
+CREATE TRIGGER shoping_cart_insert
+BEFORE INSERT ON shoping_cart FOR EACH ROW
+BEGIN
+  INSERT INTO shopping_cart_seq VALUES (NULL);
+  SET NEW.카트번호 = CONCAT('c', LPAD(LAST_INSERT_ID(), 3, '0'));
+END$$
+DELIMITER ;
+DROP TRIGGER shoping_cart_insert;
+
+SELECT * 
+FROM shopping_mall.shoping_cart LEFT OUTER JOIN shopping_mall.product ON shoping_cart.상품번호 = product.상품번호
+WHERE id= "qwer";
+
+select *
+from shopping_mall.review;
+
+CREATE TABLE `shopping_mall`.`purchase_list` (
+  `구매번호` VARCHAR(4) NOT NULL,
+  `상품번호` VARCHAR(4) NULL,
+  `id` VARCHAR(30) NULL,
+  `구매옷치수` VARCHAR(4) NULL,
+  `리뷰번호` VARCHAR(4) NULL,
+  PRIMARY KEY (`구매번호`));
+  
+  CREATE TABLE purchase_list_seq
+(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+DELIMITER $$
+CREATE TRIGGER purchase_list_insert
+BEFORE INSERT ON purchase_list FOR EACH ROW
+BEGIN
+  INSERT INTO purchase_list_seq VALUES (NULL);
+  SET NEW.구매번호 = CONCAT('b', LPAD(LAST_INSERT_ID(), 3, '0'));
+END$$
+DELIMITER ;
+DROP TRIGGER shoping_cart_insert;
+
+SELECT * 
+FROM shopping_mall.purchase_list LEFT OUTER JOIN shopping_mall.product ON purchase_list.상품번호 = product.상품번호
+WHERE id= "qwer";
+
+INSERT INTO shopping_mall.user (id, password, 성명, 주소, 키, 몸무게, 평소옷치수, 폰번호, 성별) VALUES
+('hsc', 'stdpp', '유상철', '인천', 174, 73, 'L', '01012345678', '남'),
+('sys', 'douo', '백성동', '군산', 171, 70, 'L', '01078985613', '남'),
+('jsp', 'mopp', '마진실', '익산', 179, 76, 'XL', '01053396418', '남'),
+('php', 'four', '심층수', '정읍', 175, 70, 'L', '01087652134', '남'),
+('odp', 'five', '호리병', '춘천', 173, 74, 'L', '01096541235', '남'),
+('cpp', 'six', '수라기', '철원', 171, 72, 'L', '01078998546', '남'),
+('our', 'one', '지상민', '부산', 170, 69, 'M', '01013245975', '남'),
+('oiekd', 'gdgs', '이손', '대구', 168, 65, 'M', '01045863128', '여'),
+('osyou', 'asdfe', '정몽사', '서울', 180, 78, 'XL', '01079985222', '남'),
+('goudo', 'qwer', '애기지', '광주', 178, 75, 'L', '01020150370', '남'),
+('godori', 'qwerty', '김홍철', '대전', 167, 68, 'M', '01006334034', '남'),
+('apg', 'boan', '김수일', '울산', 181, 80, 'XL', '01006524038', '남'),
+('grad', 'cbbu', '김병연', '세종', 177, 85, 'XL', '01001314715', '남'),
+('code', 'aplus', '유관순', '창원', 175, 67, 'M', '01099310125', '남'),
+('anj', 'give', '김두한', '김해', 173, 79, 'L', '01005310131', '남'),
+('ryuj', 'our', '유승룡', '수원', 174, 74, 'L', '01019193100', '여'),
+('song', 'team', '신숙민', '용인', 180, 75, 'L', '01032048652', '남'),
+('vasel', 'rate', '최무선', '성남', 169, 68, 'M', '01007643210', '남'),
+('battle', 'ppap', '이경석', '부천', 164, 60, 'M', '01036969857', '여'),
+('eclip', 'apple', '박정연', '안산', 182, 73, 'XL', '01003214501', '남'),
+('dawn', 'galz', '도민준', '안양', 183, 76, 'XL', '01078954152', '남'),
+('net', 'flip', '박윤서', '양주', 185, 81, 'XL', '01001325114', '남'),
+('omega', 'notem', '이예인', '파주', 172, 66, 'M', '01096587456', '남'),
+('dbj', 'totem', '이지아', '평택', 174, 76, 'L', '01032546017', '남'),
+('kill', 'classe', '석지원', '화성', 174, 74, 'L', '01045869210', '남'),
+('supp', 'wthel', '서민재', '김포', 175, 71, 'L', '01044443201', '남'),
+('toil', 'easter', '박도현', '군포', 176, 76, 'L', '01088889631', '남'),
+('huge', 'eggg', '우현준', '원주', 173, 73, 'L', '01075483941', '남'),
+('pape', 'find', '박상철', '평창', 171, 70, 'L', '01077498546', '남'),
+('sajo', 'dbjoa', '서지후', '전주', 166, 50, 'M', '01032015401', '여'),
+('water', 'sal', '이시은', '속초', 168, 65, 'M', '01036541751', '여'),
+('pluse', 'ryu', '박연우', '강릉', 175, 68, 'L', '01065427891', '남'),
+('gunn', 'chamji', '우승민', '청주', 177, 74, 'L', '01023282541', '남'),
+('ddffd', 'wjdus', '함소닌', '제천', 178, 76, 'XL', '01035684623', '남'),
+('scsddr', 'stdio', '박찬민', '괴산', 179, 70, 'L', '01069871526', '남'),
+('akfs', 'spslu', '유베드로', '아산', 180, 83, 'XL', '01065898752', '남'),
+('scsdr', 'stdio', '박찬민', '괴산', 179, 70, 'L', '01069871526', '남'),
+('akfs83', 'iostem', '박수진', '군산', 176, 75, 'L', '01065894452', '남'),
+('scsdr34', 'tmpro', '구여빈', '속초', 173, 71, 'M', '01066971526', '남');
+
+INSERT INTO shopping_mall.review (`상품번호`, `제목`, `내용`, `구매옷치수`, `id`) VALUES
+('p000', '괜찮아요', '배송빠르고 굿', 'L', 'hsc'),
+('p000', '좋아요', '옷 예쁘네요', 'L', 'sys'),
+('p000', '편하게', '편하게 입기 좋아요', 'XL', 'jsp'),
+('p000', '이건좀', '어디서 많이 본 디자인', 'L', 'php'),
+('p000', '배송이', '좀 느리게 왔지만 만족', 'L', 'odp'),
+('p000', '음', '약간 길어요', 'L', 'cpp'),
+('p000', '괜찮네요', '아들한테 줬어요', 'M', 'our'),
+('p000', '괜찮아요', '만족만족', 'M', 'oiekd'),
+('p000', '매우 만족', '잘입겠습니다.', 'XL', 'osyou'),
+('p000', '사이즈가', '딱 맞는거 같아요', 'L', 'goudo'),
+('p000', '후기', '기대에 좀 못 미치네요', 'M', 'godori'),
+('p000', '괜찮아요', '다음에 다른것도 살게요', 'XL', 'apg'),
+('p000', '이거', '약간 짧네요', 'XL', 'grad'),
+('p000', '이래서', '옷은 입어보고 사야하나봐요', 'M', 'code'),
+('p000', '만족함', '나쁘지않음', 'L', 'anj'),
+('p000', '따뜻하네요', '사이즈 좋고 맘에듬', 'L', 'ryuj'),
+('p000', '괜찮아요', '실밥이 좀 튀어나온것만 빼면', 'L', 'song'),
+('p000', '이쁩니다', '원하던 스타일', 'M', 'vasel'),
+('p000', '사이즈도 적당하고', '가을에 좋을듯', 'M', 'battle'),
+('p000', '여유있는핏', '적당하네요', 'XL', 'eclip'),
+('p000', '커플옷으로', '2개샀는데 맘에 들어요', 'XL', 'dawn'),
+('p000', '좋아요', '움직임도 편해요', 'XL', 'net'),
+('p000', '크기', '적당해서 마음에 듦', 'M', 'omega'),
+('p000', '오늘왔어요', '잘입을게요', 'L', 'dbj'),
+('p000', '후기보고샀는데', '괜찮은것 같음', 'L', 'kill'),
+('p000', '편하고 좋음', '제곧내', 'L', 'supp'),
+('p000', '그제왔는데', '이제 입네요 예뻐요', 'L', 'toil'),
+('p000', '한참고민했다가', '사봤는데 괜찮음', 'L', 'huge'),
+('p000', '이렇게', '잘산거 같아요', 'L', 'pape'),
+('p000', '딴데보다', '여기가 더 저렴함', 'M', 'sajo'),
+('p000', '빠른배송', '좋습니다', 'M', 'water'),
+('p000', '사이즈는 맞는데', '환불하고싶네요', 'L', 'pluse'),
+('p000', '이뻐요', '남친 선물로 줌', 'L', 'gunn'),
+('p000', '그냥 편함', '편하고 좋네요', 'XL', 'ddffd'),
+('p000', '괜찮아요', '배송빠르고 굿', 'L', 'scsdr'),
+('p000', '나쁘지 않네요', '후기', 'XL', 'akfs'),
+('p000', '걱정했는데 ', '사이즈 잘 맞네요', 'L', 'scsdr'),
+('p000', '핏이 괜찮음', '괜찮네요', 'L', 'akfs83'),
+('p000', '배송오늘옴', '입어 봤는데 좋아요', 'M', 'scsdr34');
